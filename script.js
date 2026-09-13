@@ -175,6 +175,8 @@ function ScreenController() {
     });
   };
 
+  const displayEndGame = () => {};
+
   function clickHandlerBoard(e) {
     const selectedTileRow = e.target.dataset.rowPosition;
     const selectedTileColumn = e.target.dataset.columnPosition;
