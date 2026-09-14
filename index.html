@@ -12,5 +12,21 @@
       <h1 class="turn"></h1>
       <div class="board"></div>
     </div>
+    <dialog id="game-start-dialog">
+      <p>Enter the name of the players:</p>
+      <div class="input-field">
+        <label for="player-one-name">Player 1: </label>
+        <input type="text" id="player-one-name" name="player-one-name" />
+      </div>
+      <div class="input-field">
+        <label for="player-two-name">Player 2: </label>
+        <input type="text" id="player-two-name" name="player-two-name" />
+      </div>
+      <button type="button" id="start-game-btn">Start Game</button>
+    </dialog>
+    <dialog id="game-over-dialog">
+      <p id="result-message"></p>
+      <button type="button" id="restart-btn">Play Again</button>
+    </dialog>
   </body>
 </html>

@@ -57,10 +57,7 @@ function Cell() {
   };
 }
 
-function GameController(
-  playerOneName = "Player One",
-  playerTwoName = "Player Two",
-) {
+function GameController(playerOneName, playerTwoName) {
   const board = Gameboard();
 
   const players = [
@@ -130,10 +127,14 @@ function GameController(
     );
     board.setToken(row, column, getActivePlayer().token);
 
-    if (getWinner() === "None") {
+    const result = getWinner();
+
+    if (result === "None") {
       console.log("No winner yet");
-    } else if (getWinner() === "X" || getWinner() === "O") {
-      console.log(`${getWinner()} WON!`);
+    } else if (result === "X") {
+      console.log(`${players[0].name} WON!`);
+    } else if (result === "O") {
+      console.log(`${players[1].name} WON!`);
     } else if (getWinner() === "Tie") {
       console.log("It's a tie!!!");
     }
@@ -152,7 +153,7 @@ function GameController(
 }
 
 function ScreenController() {
-  const game = GameController();
+  let game;
   const playerTurnDiv = document.querySelector(".turn");
   const boardDiv = document.querySelector(".board");
 
@@ -175,8 +176,6 @@ function ScreenController() {
     });
   };
 
-  const displayEndGame = () => {};
-
   function clickHandlerBoard(e) {
     const selectedTileRow = e.target.dataset.rowPosition;
     const selectedTileColumn = e.target.dataset.columnPosition;
@@ -189,7 +188,31 @@ function ScreenController() {
 
   boardDiv.addEventListener("click", clickHandlerBoard);
 
-  updateScreen();
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelector("#game-start-dialog").showModal();
+  });
+
+  function startGame() {
+    const playerOneField = document.querySelector("#player-one-name");
+    const playerTwoField = document.querySelector("#player-two-name");
+
+    const playerOneInput = playerOneField.value.trim();
+    const playerTwoInput = playerTwoField.value.trim();
+
+    const playerOneName = playerOneInput || "Player One";
+    const playerTwoName = playerTwoInput || "Player Two";
+
+    game = GameController(playerOneName, playerTwoName);
+
+    playerOneField.value = "";
+    playerTwoField.value = "";
+    document.querySelector("#game-start-dialog").close();
+
+    updateScreen();
+  }
+
+  const startGamebtn = document.querySelector("#start-game-btn");
+  startGamebtn.addEventListener("click", startGame);
 }
 
 ScreenController();
